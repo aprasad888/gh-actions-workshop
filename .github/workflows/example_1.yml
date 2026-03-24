@@ -1,0 +1,26 @@
+name: USDC workflow
+
+on:
+  workflow_dispatch
+
+jobs:
+ hello:
+   name: Hello USDC!
+   runs-on: ubuntu-latest
+   steps: 
+     - name: Greeting
+       run: echo "Hello USDC!"
+      
+     - run: echo "SWE track best track"
+
+ create-fellows-file:
+    name: Create a file with list of fellows
+    runs-on: macos-latest
+    steps:
+      - name: Create a new directory with file
+        run: |
+          mkdir -p usdc
+          cd usdc
+          touch fellows.txt
+          echo "This file contains a list of fellows" >> fellows.txt
+          cat fellows.txt
