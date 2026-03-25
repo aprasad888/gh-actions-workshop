@@ -5,6 +5,11 @@
 name: My first workflow!
 
 on: 
+    pull_request: 
+        types: 
+            - reopened
+        paths: 
+            - '**.md'
 
 jobs:
     my-first-job:
