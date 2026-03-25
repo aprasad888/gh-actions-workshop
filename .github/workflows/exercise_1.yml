@@ -6,8 +6,7 @@ name: My first workflow!
 
 on: 
     pull_request: 
-        types: 
-            - reopened
+        types: [reopened]
         paths: 
             - '**.md'
 
