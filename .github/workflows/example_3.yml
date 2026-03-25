@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
         file_contents:
-            description: "Enter the contents of the file to be created"
+            description: "Enter the contents of the issue template to be updated"
             required: true
             type: string
 
@@ -13,29 +13,32 @@ permissions:
   issues: write
 
 jobs:
-    create-file:
+    update-issue-template:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout repository
               uses: actions/checkout@v6
 
-            - name: Create a new file
+            - name: Update issue template markdown file
               run: |
-                touch new_file.md
-                echo "${{ inputs.file_contents }}" >> new_file.md
-                echo "File 'new_file.md' has been created."
-                cat new_file.md
+                
+                echo "${{ inputs.file_contents }}" >> ./github/ISSUE_TEMPLATE.md
+                echo "File 'ISSUE_TEMPLATE.md' has been updated."
+                cat ./github/ISSUE_TEMPLATE.md
 
-            - name: Commit and push new file
+            - name: Commit and push updated issue template
               uses: stefanzweifel/git-auto-commit-action@v5
               with:
-                commit_message: "Add new file.md"
+                commit_message: "Update ISSUE_TEMPLATE.md"
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+    create-issue:
+        runs-on: ubuntu-latest
+        needs: update-issue-template
+        steps:
             - name: Create an issue using action
               uses: JasonEtco/create-an-issue@v2
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with: 
-                filename: ./new_file.md
+                filename: ./github/ISSUE_TEMPLATE.md
