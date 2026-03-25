@@ -24,3 +24,13 @@ jobs:
           touch fellows.txt
           echo "This file contains a list of fellows" >> fellows.txt
           cat fellows.txt
+  
+ pull_request:  
+    name: Runs upon reopened pull requests that include changes to .md files using macOS
+    runs-on: macos-latest
+    types:
+      - reopened
+    branches: 
+      - 'releases/**'
+    paths: 
+      - '**.md'
